@@ -1,0 +1,36 @@
+# Serviço utilizado para simular um servidor remoto SSH
+# Recebe os arquivos de backup enviados via SCP
+
+services:
+
+  servidor-ssh:
+
+    # Imagem Linux com servidor SSH configurado
+    image: linuxserver/openssh-server
+
+    # Nome do container
+    container_name: servidor-backup
+
+
+    # Configurações do usuário SSH
+    environment:
+
+      # Usuário utilizado para conexão SSH
+      - USER_NAME=backup
+
+      # Senha do usuário 
+      - USER_PASSWORD=123456
+
+      # Permite autenticação utilizando senha
+      - PASSWORD_ACCESS=true
+
+
+    # Mapeia a porta SSH do container para a máquina local
+    # Porta 2222 utilizada para evitar conflito com a porta SSH padrão
+    ports:
+      - "2222:2222"
+
+
+    # Pasta onde os backups enviados serão armazenados
+    volumes:
+      - ./backup-recebido:/backup
