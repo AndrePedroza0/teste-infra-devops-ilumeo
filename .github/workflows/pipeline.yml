@@ -1,0 +1,48 @@
+# Nome da pipeline
+name: Backup Docker CI/CD
+
+
+# Define quando a Action será executada
+on:
+  push:
+    branches:
+      - main
+
+
+# Jobs que serão executados
+jobs:
+
+  # Etapa de testes
+  test:
+
+    # Ambiente onde será executado
+    runs-on: ubuntu-latest
+
+
+    steps:
+
+      # Baixa o código do repositório
+      - name: Checkout do código
+        uses: actions/checkout@v4
+
+
+      # Executa teste simulado
+      - name: Executar testes
+        run: echo "Running tests"
+
+
+
+  # Etapa de deploy
+  deploy:
+
+    # Depende da conclusão dos testes
+    needs: test
+
+    runs-on: ubuntu-latest
+
+
+    steps:
+
+      # Executa deploy simulado
+      - name: Executar deploy
+        run: echo "Deploy"
